@@ -40,7 +40,7 @@ public class ModelImpl implements Model {
             int x = c;
             int y = r;
 
-            while (x < maxWidth && y < maxWidth && x >= 0 && y >= 0) {
+            while (x < maxWidth && y < maxHeight && x >= 0 && y >= 0) {
                 if (lamp[y][x] == 2) {
                     continue;
                 }
@@ -83,7 +83,7 @@ public class ModelImpl implements Model {
             int x = c;
             int y = r;
 
-            while (x < maxWidth && y < maxWidth && x >= 0 && y >= 0) {
+            while (x < maxWidth && y < maxHeight && x >= 0 && y >= 0) {
                 if (library.getPuzzle(currPuzzle).getCellType(y, x) == CellType.WALL) {
                     break;
                 }
@@ -152,7 +152,7 @@ public class ModelImpl implements Model {
             int x = c;
             int y = r;
 
-            while (x < maxWidth && y < maxWidth && x >= 0 && y >= 0) {
+            while (x < maxWidth && y < maxHeight && x >= 0 && y >= 0) {
                 if (lamp[y][x] == 2) {
                     return true;
                 }
