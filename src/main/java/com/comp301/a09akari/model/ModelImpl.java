@@ -226,6 +226,8 @@ public class ModelImpl implements Model {
         Puzzle curr = library.getPuzzle(currPuzzle);
         lamp = new int[curr.getHeight()][curr.getWidth()];
 
+
+        System.out.println("This should notify");
         notifyObservers();
     }
 
@@ -271,11 +273,6 @@ public class ModelImpl implements Model {
         if (c > 0 && lamp[r][c - 1] == 2) numLamps++;
         if (r < curr.getHeight() - 1 && lamp[r + 1][c] == 2) numLamps++;
         if (c < curr.getWidth() - 1 && lamp[r][c + 1] == 2) numLamps++;
-
-        for (int i = 0; i < lamp.length; i++) {
-            System.out.println(Arrays.toString(lamp[i]));
-        }
-        System.out.println(clues + " " + numLamps + " " + r + " " + c + " " + isLamp(r, c+1) + "\n");
 
         return numLamps == clues;
     }
