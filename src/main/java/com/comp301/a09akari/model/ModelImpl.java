@@ -2,6 +2,7 @@ package com.comp301.a09akari.model;
 
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ModelImpl implements Model {
@@ -254,10 +255,15 @@ public class ModelImpl implements Model {
 
         int clues = curr.getClue(r, c);
         int numLamps = 0;
-        if (r > 0 && lamp[r - 1][c] == 2 && !isLampIllegal(r-1, c)) numLamps++;
-        if (c > 0 && lamp[r][c - 1] == 2 && !isLampIllegal(r, c-1)) numLamps++;
-        if (r < curr.getHeight() - 1 && lamp[r + 1][c] == 2 && !isLampIllegal(r+1, c)) numLamps++;
-        if (c < curr.getWidth() - 1 && lamp[r][c + 1] == 2 && !isLampIllegal(r, c+1)) numLamps++;
+        if (r > 0 && lamp[r - 1][c] == 2) numLamps++;
+        if (c > 0 && lamp[r][c - 1] == 2) numLamps++;
+        if (r < curr.getHeight() - 1 && lamp[r + 1][c] == 2) numLamps++;
+        if (c < curr.getWidth() - 1 && lamp[r][c + 1] == 2) numLamps++;
+
+        for (int i = 0; i < lamp.length; i++) {
+            System.out.println(Arrays.toString(lamp));
+        }
+        System.out.println();
 
         return numLamps == clues;
     }
