@@ -147,7 +147,7 @@ public class ModelImpl implements Model {
         }
 
         if (lamp[r][c] != 2) {
-            return false;
+            throw new IllegalArgumentException("Not lamp");
         }
 
         int[][] directions = {{1,0}, {-1,0}, {0,1}, {0,-1}};
