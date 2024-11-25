@@ -51,6 +51,10 @@ public class ModelImpl implements Model {
                     break;
                 }
 
+                if (library.getPuzzle(currPuzzle).getCellType(y, x) == CellType.CLUE) {
+                    break;
+                }
+
                 else {
                     lamp[y][x] = 1;
                 }
@@ -87,6 +91,10 @@ public class ModelImpl implements Model {
 
             while (x < maxWidth && y < maxHeight && x >= 0 && y >= 0) {
                 if (library.getPuzzle(currPuzzle).getCellType(y, x) == CellType.WALL) {
+                    break;
+                }
+
+                if (library.getPuzzle(currPuzzle).getCellType(y, x) == CellType.CLUE) {
                     break;
                 }
 
@@ -155,11 +163,12 @@ public class ModelImpl implements Model {
             int y = r;
 
             while (x < maxWidth && y < maxHeight && x >= 0 && y >= 0) {
-                if (lamp[y][x] == 2) {
-                    return true;
-                }
                 if (library.getPuzzle(currPuzzle).getCellType(y, x) == CellType.WALL) {
                     break;
+                }
+
+                if (lamp[y][x] == 2) {
+                    return true;
                 }
 
                 x += dx;
@@ -245,21 +254,10 @@ public class ModelImpl implements Model {
 
         int clues = curr.getClue(r, c);
         int numLamps = 0;
-        if (r != 0 && lamp[r-1][c] == 2) {
-            numLamps++;
-        }
-
-        if (c != 0 && lamp[r][c-1] == 2) {
-            numLamps++;
-        }
-
-        if (r < curr.getHeight()-1 && lamp[r+1][c] == 2) {
-            numLamps++;
-        }
-
-        if (c < curr.getWidth()-1 && lamp[r][c+1] == 2) {
-            numLamps++;
-        }
+        if (r > 0 && lamp[r - 1][c] == 2) numLamps++;
+        if (c > 0 && lamp[r][c - 1] == 2) numLamps++;
+        if (r < curr.getHeight() - 1 && lamp[r + 1][c] == 2) numLamps++;
+        if (c < curr.getWidth() - 1 && lamp[r][c + 1] == 2) numLamps++;
 
         return numLamps == clues;
     }
