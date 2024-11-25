@@ -171,7 +171,7 @@ public class ModelImpl implements Model {
                     break;
                 }
 
-                if (lamp[y][x] == 2 && x != c && y != r) {
+                if (lamp[y][x] == 2 && (x != c || y != r)) {
                     return true;
                 }
 
