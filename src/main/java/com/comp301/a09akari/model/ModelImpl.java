@@ -19,6 +19,7 @@ public class ModelImpl implements Model {
     }
     @Override
     public void addLamp(int r, int c) {
+        System.out.println("This should notify 1");
         if (r < 0 || c < 0 || r >= library.getPuzzle(currPuzzle).getHeight() || c >= library.getPuzzle(currPuzzle).getWidth()) {
             throw new IndexOutOfBoundsException("Out of bounds");
         }
@@ -70,6 +71,7 @@ public class ModelImpl implements Model {
 
     @Override
     public void removeLamp(int r, int c) {
+        System.out.println("This should notify 2");
         if (r < 0 || c < 0 || r >= library.getPuzzle(currPuzzle).getHeight() || c >= library.getPuzzle(currPuzzle).getWidth()) {
             throw new IndexOutOfBoundsException("Out of bounds");
         }
@@ -125,6 +127,7 @@ public class ModelImpl implements Model {
 
     @Override
     public boolean isLit(int r, int c) {
+        System.out.println("This should notify 3");
         if (r < 0 || c < 0 || r >= library.getPuzzle(currPuzzle).getHeight() || c >= library.getPuzzle(currPuzzle).getWidth()) {
             throw new IndexOutOfBoundsException("Out of bounds");
         }
@@ -138,6 +141,7 @@ public class ModelImpl implements Model {
 
     @Override
     public boolean isLamp(int r, int c) {
+        System.out.println("This should notify 4");
         if (r < 0 || c < 0 || r >= library.getPuzzle(currPuzzle).getHeight() || c >= library.getPuzzle(currPuzzle).getWidth()) {
             throw new IndexOutOfBoundsException("Out of bounds");
         }
@@ -151,6 +155,7 @@ public class ModelImpl implements Model {
 
     @Override
     public boolean isLampIllegal(int r, int c) {
+        System.out.println("This should notify 5");
         if (r < 0 || c < 0 || r >= library.getPuzzle(currPuzzle).getHeight() || c >= library.getPuzzle(currPuzzle).getWidth()) {
             throw new IndexOutOfBoundsException("Out of bounds");
         }
@@ -197,11 +202,13 @@ public class ModelImpl implements Model {
 
     @Override
     public Puzzle getActivePuzzle() {
+        System.out.println("This should notify 6");
         return library.getPuzzle(currPuzzle);
     }
 
     @Override
     public int getActivePuzzleIndex() {
+        System.out.println("This should notify 7");
         return currPuzzle;
     }
 
@@ -218,6 +225,7 @@ public class ModelImpl implements Model {
 
     @Override
     public int getPuzzleLibrarySize() {
+        System.out.println("This should notify 8");
         return library.size();
     }
 
@@ -227,12 +235,12 @@ public class ModelImpl implements Model {
         lamp = new int[curr.getHeight()][curr.getWidth()];
 
 
-        System.out.println("This should notify");
         notifyObservers();
     }
 
     @Override
     public boolean isSolved() {
+        System.out.println("This should notify 9");
         Puzzle curr = library.getPuzzle(currPuzzle);
         for (int i = 0; i < lamp.length; i++) {
             for (int j = 0; j < lamp[0].length; j++) {
@@ -257,6 +265,7 @@ public class ModelImpl implements Model {
 
     @Override
     public boolean isClueSatisfied(int r, int c) {
+        System.out.println("This should notify 10");
         if (r < 0 || c < 0 || r >= library.getPuzzle(currPuzzle).getHeight() || c >= library.getPuzzle(currPuzzle).getWidth()) {
             throw new IndexOutOfBoundsException("Out of bounds");
         }
