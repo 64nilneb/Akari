@@ -281,11 +281,13 @@ public class ModelImpl implements Model {
     @Override
     public void addObserver(ModelObserver observer) {
         modelObservers.add(observer);
+        notifyObservers();
     }
 
     @Override
     public void removeObserver(ModelObserver observer) {
         modelObservers.remove(observer);
+        notifyObservers();
     }
 
     private void notifyObservers() {
