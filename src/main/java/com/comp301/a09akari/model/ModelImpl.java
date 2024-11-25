@@ -99,6 +99,10 @@ public class ModelImpl implements Model {
                     break;
                 }
 
+                if (lamp[y][x] == 2 && (y != r || x != c)) {
+                    break;
+                }
+
                 else {
                     lamp[y][x] = 0;
                 }
