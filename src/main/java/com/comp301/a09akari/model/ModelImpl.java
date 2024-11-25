@@ -261,7 +261,7 @@ public class ModelImpl implements Model {
         if (c < curr.getWidth() - 1 && lamp[r][c + 1] == 2) numLamps++;
 
         for (int i = 0; i < lamp.length; i++) {
-            System.out.println(Arrays.toString(lamp));
+            System.out.println(Arrays.toString(lamp[i]));
         }
         System.out.println(clues + " " + numLamps + " \n");
 
