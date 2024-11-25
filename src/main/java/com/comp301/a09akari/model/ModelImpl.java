@@ -222,10 +222,10 @@ public class ModelImpl implements Model {
         for (int i = 0; i < lamp.length; i++) {
             for (int j = 0; j < lamp[0].length; j++) {
                 if (curr.getCellType(i, j) == CellType.CORRIDOR) {
-                    if (lamp[i][j] < 1) {
+                    if (!isLit(i, j)) {
                         return false;
                     }
-                    if (isLampIllegal(i, j)) {
+                    if (isLamp(i,j) && isLampIllegal(i, j)) {
                         return false;
                     }
                 }
@@ -254,12 +254,10 @@ public class ModelImpl implements Model {
 
         int clues = curr.getClue(r, c);
         int numLamps = 0;
-        if (r > 0 && lamp[r - 1][c] == 2) numLamps++;
-        if (c > 0 && lamp[r][c - 1] == 2) numLamps++;
-        if (r < curr.getHeight() - 1 && lamp[r + 1][c] == 2) numLamps++;
-        if (c < curr.getWidth() - 1 && lamp[r][c + 1] == 2) numLamps++;
-
-        System.out.println(numLamps + " " + clues);
+        if (r > 0 && lamp[r - 1][c] == 2 && curr.getCellType(r, c) == CellType.CORRIDOR) numLamps++;
+        if (c > 0 && lamp[r][c - 1] == 2 && curr.getCellType(r, c) == CellType.CORRIDOR) numLamps++;
+        if (r < curr.getHeight() - 1 && lamp[r + 1][c] == 2 && curr.getCellType(r, c) == CellType.CORRIDOR) numLamps++;
+        if (c < curr.getWidth() - 1 && lamp[r][c + 1] == 2 && curr.getCellType(r, c) == CellType.CORRIDOR) numLamps++;
 
         return numLamps == clues;
     }
