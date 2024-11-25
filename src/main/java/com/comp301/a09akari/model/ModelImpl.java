@@ -221,7 +221,8 @@ public class ModelImpl implements Model {
             throw new IndexOutOfBoundsException("No puzzles");
         }
         currPuzzle = index;
-        //resetPuzzle();
+        Puzzle curr = library.getPuzzle(currPuzzle);
+        lamp = new int[curr.getHeight()][curr.getWidth()];
 
         notifyObservers();
     }
