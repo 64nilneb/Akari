@@ -240,7 +240,7 @@ public class ModelImpl implements Model {
         lamp = new int[curr.getHeight()][curr.getWidth()];
 
 
-        notifyObservers();
+        //notifyObservers();
     }
 
     @Override
