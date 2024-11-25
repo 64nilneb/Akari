@@ -108,6 +108,14 @@ public class ModelImpl implements Model {
             }
         }
 
+        for (int i = 0; i < lamp.length; i++) {
+            for (int j = 0; j < lamp[0].length; j++) {
+                if (lamp[i][j] == 2) {
+                    addLamp(i, j);
+                }
+            }
+        }
+
         notifyObservers();
     }
 
