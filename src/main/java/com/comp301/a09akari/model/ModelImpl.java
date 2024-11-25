@@ -16,7 +16,6 @@ public class ModelImpl implements Model {
         this.modelObservers = new ArrayList<>();
 
         this.lamp = new int[library.getPuzzle(currPuzzle).getHeight()][library.getPuzzle(currPuzzle).getHeight()];
-        notifyObservers();
     }
     @Override
     public void addLamp(int r, int c) {
@@ -222,7 +221,7 @@ public class ModelImpl implements Model {
             throw new IndexOutOfBoundsException("No puzzles");
         }
         currPuzzle = index;
-        resetPuzzle();
+        //resetPuzzle();
 
         notifyObservers();
     }
