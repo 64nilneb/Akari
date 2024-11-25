@@ -3,8 +3,8 @@ package com.comp301.a09akari.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModelImpl implements Model {
-    private PuzzleLibrary library;
+public class ModelImpl {
+    /*private PuzzleLibrary library;
     private int currPuzzle;
     private int[][] lamp;
     List<ModelObserver> observers;
@@ -355,5 +355,5 @@ public class ModelImpl implements Model {
         for (ModelObserver mo : observers) {
             mo.update(model);
         }
-    }
+    }*/
 }
