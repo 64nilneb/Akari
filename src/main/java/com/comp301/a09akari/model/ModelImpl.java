@@ -254,10 +254,10 @@ public class ModelImpl implements Model {
 
         int clues = curr.getClue(r, c);
         int numLamps = 0;
-        if (r > 0 && lamp[r - 1][c] == 2 && curr.getCellType(r - 1, c) == CellType.CORRIDOR) numLamps++;
-        if (c > 0 && lamp[r][c - 1] == 2 && curr.getCellType(r, c - 1) == CellType.CORRIDOR) numLamps++;
-        if (r < curr.getHeight() - 1 && lamp[r + 1][c] == 2 && curr.getCellType(r + 1, c) == CellType.CORRIDOR) numLamps++;
-        if (c < curr.getWidth() - 1 && lamp[r][c + 1] == 2 && curr.getCellType(r, c + 1) == CellType.CORRIDOR) numLamps++;
+        if (r > 0 && lamp[r - 1][c] == 2 && !isLampIllegal(r-1, c)) numLamps++;
+        if (c > 0 && lamp[r][c - 1] == 2 && !isLampIllegal(r, c-1)) numLamps++;
+        if (r < curr.getHeight() - 1 && lamp[r + 1][c] == 2 && !isLampIllegal(r+1, c)) numLamps++;
+        if (c < curr.getWidth() - 1 && lamp[r][c + 1] == 2 && !isLampIllegal(r, c+1)) numLamps++;
 
         return numLamps == clues;
     }
