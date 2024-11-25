@@ -263,7 +263,7 @@ public class ModelImpl implements Model {
         for (int i = 0; i < lamp.length; i++) {
             System.out.println(Arrays.toString(lamp));
         }
-        System.out.println();
+        System.out.println(clues + " " + numLamps + " \n");
 
         return numLamps == clues;
     }
