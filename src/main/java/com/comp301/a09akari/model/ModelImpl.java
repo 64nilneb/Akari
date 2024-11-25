@@ -167,6 +167,10 @@ public class ModelImpl implements Model {
                     break;
                 }
 
+                if (library.getPuzzle(currPuzzle).getCellType(y, x) == CellType.CLUE) {
+                    break;
+                }
+
                 if (lamp[y][x] == 2 && x != c && y != r) {
                     return true;
                 }
@@ -243,14 +247,10 @@ public class ModelImpl implements Model {
         }
 
         if (library.getPuzzle(currPuzzle).getCellType(r, c) != CellType.CLUE) {
-            throw new IllegalArgumentException("Not corridor");
+            throw new IllegalArgumentException("Not clue");
         }
 
         Puzzle curr = library.getPuzzle(currPuzzle);
-
-        if (curr.getCellType(r, c) != CellType.CLUE) {
-            throw new IllegalArgumentException("Not clue");
-        }
 
         int clues = curr.getClue(r, c);
         int numLamps = 0;
