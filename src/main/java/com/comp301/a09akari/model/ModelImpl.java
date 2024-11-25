@@ -16,9 +16,11 @@ public class ModelImpl implements Model {
         this.modelObservers = new ArrayList<>();
 
         this.lamp = new int[library.getPuzzle(currPuzzle).getHeight()][library.getPuzzle(currPuzzle).getHeight()];
+        notifyObservers();
     }
     @Override
     public void addLamp(int r, int c) {
+        System.out.println("addLamp");
         if (r < 0 || c < 0 || r >= library.getPuzzle(currPuzzle).getHeight() || c >= library.getPuzzle(currPuzzle).getWidth()) {
             throw new IndexOutOfBoundsException("Out of bounds");
         }
@@ -70,6 +72,7 @@ public class ModelImpl implements Model {
 
     @Override
     public void removeLamp(int r, int c) {
+        System.out.println("removeLamp");
         if (r < 0 || c < 0 || r >= library.getPuzzle(currPuzzle).getHeight() || c >= library.getPuzzle(currPuzzle).getWidth()) {
             throw new IndexOutOfBoundsException("Out of bounds");
         }
@@ -125,6 +128,7 @@ public class ModelImpl implements Model {
 
     @Override
     public boolean isLit(int r, int c) {
+        System.out.println("isLit");
         if (r < 0 || c < 0 || r >= library.getPuzzle(currPuzzle).getHeight() || c >= library.getPuzzle(currPuzzle).getWidth()) {
             throw new IndexOutOfBoundsException("Out of bounds");
         }
@@ -138,6 +142,7 @@ public class ModelImpl implements Model {
 
     @Override
     public boolean isLamp(int r, int c) {
+        System.out.println("isLamp");
         if (r < 0 || c < 0 || r >= library.getPuzzle(currPuzzle).getHeight() || c >= library.getPuzzle(currPuzzle).getWidth()) {
             throw new IndexOutOfBoundsException("Out of bounds");
         }
@@ -151,6 +156,7 @@ public class ModelImpl implements Model {
 
     @Override
     public boolean isLampIllegal(int r, int c) {
+        System.out.println("IllegalLamp");
         if (r < 0 || c < 0 || r >= library.getPuzzle(currPuzzle).getHeight() || c >= library.getPuzzle(currPuzzle).getWidth()) {
             throw new IndexOutOfBoundsException("Out of bounds");
         }
@@ -199,16 +205,19 @@ public class ModelImpl implements Model {
 
     @Override
     public Puzzle getActivePuzzle() {
+        System.out.println("getPuz");
         return library.getPuzzle(currPuzzle);
     }
 
     @Override
     public int getActivePuzzleIndex() {
+        System.out.println("activePuz");
         return currPuzzle;
     }
 
     @Override
     public void setActivePuzzleIndex(int index) {
+        System.out.println("setPuz");
         if (index < 0 || index >= library.size()) {
             throw new IndexOutOfBoundsException("No puzzles");
         }
@@ -220,11 +229,13 @@ public class ModelImpl implements Model {
 
     @Override
     public int getPuzzleLibrarySize() {
+        System.out.println("libSize");
         return library.size();
     }
 
     @Override
     public void resetPuzzle() {
+        System.out.println("resetPuz");
         Puzzle curr = library.getPuzzle(currPuzzle);
         lamp = new int[curr.getHeight()][curr.getWidth()];
 
@@ -234,6 +245,7 @@ public class ModelImpl implements Model {
 
     @Override
     public boolean isSolved() {
+        System.out.println("isSolved");
         Puzzle curr = library.getPuzzle(currPuzzle);
         for (int i = 0; i < lamp.length; i++) {
             for (int j = 0; j < lamp[0].length; j++) {
@@ -258,6 +270,7 @@ public class ModelImpl implements Model {
 
     @Override
     public boolean isClueSatisfied(int r, int c) {
+        System.out.println("clue");
         if (r < 0 || c < 0 || r >= library.getPuzzle(currPuzzle).getHeight() || c >= library.getPuzzle(currPuzzle).getWidth()) {
             throw new IndexOutOfBoundsException("Out of bounds");
         }
@@ -280,14 +293,13 @@ public class ModelImpl implements Model {
 
     @Override
     public void addObserver(ModelObserver observer) {
+        System.out.println("addOb");
         modelObservers.add(observer);
-        notifyObservers();
     }
 
     @Override
     public void removeObserver(ModelObserver observer) {
         modelObservers.remove(observer);
-        notifyObservers();
     }
 
     private void notifyObservers() {
