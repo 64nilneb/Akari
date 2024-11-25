@@ -185,6 +185,7 @@ public class ModelImpl implements Model {
             throw new IndexOutOfBoundsException("No puzzles");
         }
         currPuzzle = index;
+        resetPuzzle();
 
         notifyObservers();
     }
@@ -204,7 +205,26 @@ public class ModelImpl implements Model {
 
     @Override
     public boolean isSolved() {
-        return false;
+        Puzzle curr = library.getPuzzle(currPuzzle);
+        for (int i = 0; i < lamp.length; i++) {
+            for (int j = 0; j < lamp[0].length; j++) {
+                if (curr.getCellType(i, j) == CellType.CORRIDOR) {
+                    if (lamp[i][j] < 1) {
+                        return false;
+                    }
+                    if (isLampIllegal(i, j)) {
+                        return false;
+                    }
+                }
+
+                else if (curr.getCellType(i, j) == CellType.CLUE) {
+                    if (!isClueSatisfied(i, j)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     @Override
@@ -213,7 +233,7 @@ public class ModelImpl implements Model {
             throw new IndexOutOfBoundsException("Out of bounds");
         }
 
-        if (library.getPuzzle(currPuzzle).getCellType(r, c) != CellType.CORRIDOR) {
+        if (library.getPuzzle(currPuzzle).getCellType(r, c) != CellType.CLUE) {
             throw new IllegalArgumentException("Not corridor");
         }
 
