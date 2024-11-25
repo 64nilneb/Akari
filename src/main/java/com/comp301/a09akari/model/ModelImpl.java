@@ -167,7 +167,7 @@ public class ModelImpl implements Model {
                     break;
                 }
 
-                if (lamp[y][x] == 2) {
+                if (lamp[y][x] == 2 && x != c && y != r) {
                     return true;
                 }
 
@@ -258,6 +258,8 @@ public class ModelImpl implements Model {
         if (c > 0 && lamp[r][c - 1] == 2) numLamps++;
         if (r < curr.getHeight() - 1 && lamp[r + 1][c] == 2) numLamps++;
         if (c < curr.getWidth() - 1 && lamp[r][c + 1] == 2) numLamps++;
+
+        System.out.println(numLamps + " " + clues);
 
         return numLamps == clues;
     }
