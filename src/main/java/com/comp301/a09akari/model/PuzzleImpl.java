@@ -24,10 +24,10 @@ public class PuzzleImpl implements Puzzle {
       int cellVal = board[r][c];
 
       if (cellVal == 5) {
-          return CellType.CORRIDOR;
+          return CellType.WALL;
       }
       else if (cellVal == 6) {
-          return CellType.WALL;
+          return CellType.CORRIDOR;
       }
       else {
           return CellType.CLUE;
