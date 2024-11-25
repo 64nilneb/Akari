@@ -42,6 +42,8 @@ public class ModelImpl implements Model {
 
             while (x < maxWidth && y < maxHeight && x >= 0 && y >= 0) {
                 if (lamp[y][x] == 2) {
+                    x += dx;
+                    y += dy;
                     continue;
                 }
 
