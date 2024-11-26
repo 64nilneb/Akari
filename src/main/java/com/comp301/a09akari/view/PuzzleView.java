@@ -4,13 +4,14 @@ import com.comp301.a09akari.controller.ClassicMvcController;
 import com.comp301.a09akari.controller.ControllerImpl;
 import com.comp301.a09akari.model.CellType;
 import com.comp301.a09akari.model.Model;
+import com.comp301.a09akari.model.ModelObserver;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
-public class PuzzleView implements FXComponent {
+public class PuzzleView implements FXComponent, ModelObserver {
 
     private Button[][] buttonGrid;
     private int rows;
@@ -24,6 +25,8 @@ public class PuzzleView implements FXComponent {
         this.rows = model.getActivePuzzle().getHeight();
         this.cols = model.getActivePuzzle().getWidth();
         this.buttonGrid = new Button[rows][cols];
+
+        model.addObserver(this);
     }
 
     public Parent render() {
@@ -41,25 +44,7 @@ public class PuzzleView implements FXComponent {
                 int currRow = row;
                 int currCol = col;
                 cellButton.setOnAction(event -> {
-                    if (model.getActivePuzzle().getCellType(currRow, currCol) == CellType.CORRIDOR) {
-                        if (model.isLamp(currRow, currCol)) {
-                            cellButton.setStyle("-fx-background-color: white;" +
-                                "-fx-border-color: black;" +
-                                "-fx-border-width: 1;");
-                            cellButton.setText("");
-                            controller.clickCell(currRow, currCol);
-                            lightDown();
-                            lightUp();
-                        } else {
-                            cellButton.setText("\uD83D\uDCA1");
-                            cellButton.setStyle("-fx-font-size: 32px;");
-                            controller.clickCell(currRow, currCol);
-                            lightUp();
-                        }
-                    }
-
-                    checkIllegalLamps();
-                    checkIfSolved();
+                    controller.clickCell(currRow, currCol);
                 });
 
                 grid.add(cellButton, col, row);
@@ -88,15 +73,28 @@ public class PuzzleView implements FXComponent {
         } else if (model.getActivePuzzle().getCellType(row, col) == CellType.CLUE) {
             int clueNumber = model.getActivePuzzle().getClue(row, col);
             button.setText(String.valueOf(clueNumber));
-            button.setStyle("-fx-background-color: black;" +
-                "-fx-border-color: black;" +
-                "-fx-border-width: 1;" +
-                "-fx-focus-color: transparent;" +
-                "-fx-faint-focus-color: transparent;" +
-                "-fx-padding: 0;" +
-                "-fx-alignment: center;" +
-                "-fx-font-size: 32px;" +
-                "-fx-text-fill: white;");
+            if (clueNumber == 0) {
+                button.setStyle("-fx-background-color: #18ab3d;" +
+                                "-fx-border-color: black;" +
+                                "-fx-border-width: 1;" +
+                                "-fx-focus-color: transparent;" +
+                                "-fx-faint-focus-color: transparent;" +
+                                "-fx-padding: 0;" +
+                                "-fx-alignment: center;" +
+                                "-fx-font-size: 32px;" +
+                                "-fx-text-fill: white;");
+            }
+            else {
+                button.setStyle("-fx-background-color: black;" +
+                                "-fx-border-color: black;" +
+                                "-fx-border-width: 1;" +
+                                "-fx-focus-color: transparent;" +
+                                "-fx-faint-focus-color: transparent;" +
+                                "-fx-padding: 0;" +
+                                "-fx-alignment: center;" +
+                                "-fx-font-size: 32px;" +
+                                "-fx-text-fill: white;");
+            }
         } else {
             button.setStyle("-fx-background-color: white;" +
                 "-fx-border-color: black;" +
@@ -115,11 +113,12 @@ public class PuzzleView implements FXComponent {
         for (int r = 0; r < maxHeight; r++) {
             for (int c = 0; c < maxWidth; c++) {
                 Button button = buttonGrid[r][c];
-                if (model.getActivePuzzle().getCellType(r, c) == CellType.CORRIDOR &&
-                    model.isLit(r, c)) {
-                    button.setStyle("-fx-background-color: yellow;" +
-                        "-fx-border-color: black;" +
-                        "-fx-border-width: 1;");
+                if (model.getActivePuzzle().getCellType(r, c) == CellType.CORRIDOR) {
+                    if (model.isLit(r, c)) {
+                        button.setStyle("-fx-background-color: yellow;" +
+                            "-fx-border-color: black;" +
+                            "-fx-border-width: 1;");
+                    }
                 }
             }
         }
@@ -161,9 +160,67 @@ public class PuzzleView implements FXComponent {
         }
     }
 
-    private void checkIfSolved() {
-        if (model.isSolved()) {
+    private void lightbulb() {
+        int maxHeight = model.getActivePuzzle().getHeight();
+        int maxWidth = model.getActivePuzzle().getWidth();
 
+        for (int r = 0; r < maxHeight; r++) {
+            for (int c = 0; c < maxWidth; c++) {
+                Button button = buttonGrid[r][c];
+                if (model.getActivePuzzle().getCellType(r, c) == CellType.CORRIDOR) {
+                    if (model.isLamp(r, c)) {
+                        button.setText("\uD83D\uDCA1");
+                    }
+                    else {
+                        button.setText("");
+                    }
+                }
+            }
         }
+    }
+
+    private void clueSatisfied() {
+        int maxHeight = model.getActivePuzzle().getHeight();
+        int maxWidth = model.getActivePuzzle().getWidth();
+
+        for (int r = 0; r < maxHeight; r++) {
+            for (int c = 0; c < maxWidth; c++) {
+                Button button = buttonGrid[r][c];
+                if (model.getActivePuzzle().getCellType(r, c) == CellType.CLUE) {
+                    if (model.isClueSatisfied(r, c)) {
+                        button.setStyle("-fx-background-color: #18ab3d;" +
+                            "-fx-border-color: black;" +
+                            "-fx-border-width: 1;" +
+                            "-fx-focus-color: transparent;" +
+                            "-fx-faint-focus-color: transparent;" +
+                            "-fx-padding: 0;" +
+                            "-fx-alignment: center;" +
+                            "-fx-font-size: 32px;" +
+                            "-fx-text-fill: white;");
+                    }
+                    else {
+                        button.setStyle("-fx-background-color: black;" +
+                            "-fx-border-color: black;" +
+                            "-fx-border-width: 1;" +
+                            "-fx-focus-color: transparent;" +
+                            "-fx-faint-focus-color: transparent;" +
+                            "-fx-padding: 0;" +
+                            "-fx-alignment: center;" +
+                            "-fx-font-size: 32px;" +
+                            "-fx-text-fill: white;");
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void update(Model model) {
+        this.model = model;
+        lightUp();
+        checkIllegalLamps();
+        lightDown();
+        lightbulb();
+        clueSatisfied();
     }
 }

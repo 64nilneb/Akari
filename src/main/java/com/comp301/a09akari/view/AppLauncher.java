@@ -1,15 +1,11 @@
 package com.comp301.a09akari.view;
 
 import com.comp301.a09akari.SamplePuzzles;
-import com.comp301.a09akari.controller.ClassicMvcController;
 import com.comp301.a09akari.controller.ControllerImpl;
 import com.comp301.a09akari.model.*;
 import javafx.application.Application;
-import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.scene.control.Label;
 import javafx.scene.Scene;
 
 public class AppLauncher extends Application {
@@ -31,10 +27,11 @@ public class AppLauncher extends Application {
     library.addPuzzle(puzzle5);
 
     Model model = new ModelImpl(library);
-    //model.setActivePuzzleIndex(1);
+    model.setActivePuzzleIndex(0);
     ControllerImpl controller = new ControllerImpl(model);
 
     FXComponent puzzleView = new PuzzleView(controller);
+    FXComponent solvedMessage = new SolvedMessage(controller);
 
     BorderPane root = new BorderPane();
     root.setCenter(puzzleView.render());
