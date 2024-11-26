@@ -2,6 +2,7 @@ package com.comp301.a09akari.controller;
 
 import com.comp301.a09akari.model.CellType;
 import com.comp301.a09akari.model.Model;
+
 public class ControllerImpl implements ClassicMvcController {
   private Model model;
 
@@ -46,10 +47,10 @@ public class ControllerImpl implements ClassicMvcController {
   @Override
   public void clickRandPuzzle() {
     int size = model.getPuzzleLibrarySize();
-    int rand = (int)(Math.random() * size);
+    int rand = (int) (Math.random() * size);
 
     while (rand == model.getActivePuzzleIndex()) {
-      rand = (int)(Math.random() * size);
+      rand = (int) (Math.random() * size);
     }
 
     model.setActivePuzzleIndex(rand);

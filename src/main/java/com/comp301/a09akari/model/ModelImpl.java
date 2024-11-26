@@ -1,8 +1,6 @@
 package com.comp301.a09akari.model;
 
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ModelImpl implements Model {
