@@ -14,16 +14,51 @@ public class ControllerImpl implements ClassicMvcController {
   }
 
   @Override
-  public void clickNextPuzzle() {}
+  public void clickNextPuzzle() {
+    int size = model.getPuzzleLibrarySize();
+    if (size == 0) {
+      return;
+    }
+
+    int curr = model.getActivePuzzleIndex();
+    if (curr >= size - 1) {
+      model.setActivePuzzleIndex(0);
+    } else {
+      model.setActivePuzzleIndex(curr + 1);
+    }
+  }
 
   @Override
-  public void clickPrevPuzzle() {}
+  public void clickPrevPuzzle() {
+    int size = model.getPuzzleLibrarySize();
+    if (size == 0) {
+      return;
+    }
+
+    int curr = model.getActivePuzzleIndex();
+    if (curr == 0) {
+      model.setActivePuzzleIndex(size - 1);
+    } else {
+      model.setActivePuzzleIndex(curr - 1);
+    }
+  }
 
   @Override
-  public void clickRandPuzzle() {}
+  public void clickRandPuzzle() {
+    int size = model.getPuzzleLibrarySize();
+    int rand = (int)(Math.random() * size);
+
+    while (rand == model.getActivePuzzleIndex()) {
+      rand = (int)(Math.random() * size);
+    }
+
+    model.setActivePuzzleIndex(rand);
+  }
 
   @Override
-  public void clickResetPuzzle() {}
+  public void clickResetPuzzle() {
+    model.resetPuzzle();
+  }
 
   @Override
   public void clickCell(int r, int c) {

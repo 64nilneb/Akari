@@ -4,7 +4,12 @@ import com.comp301.a09akari.SamplePuzzles;
 import com.comp301.a09akari.controller.ControllerImpl;
 import com.comp301.a09akari.model.*;
 import javafx.application.Application;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 
@@ -31,12 +36,28 @@ public class AppLauncher extends Application {
     ControllerImpl controller = new ControllerImpl(model);
 
     FXComponent puzzleView = new PuzzleView(controller);
-    FXComponent solvedMessage = new SolvedMessage(controller);
+    FXComponent controlView = new ControlView(controller);
 
-    BorderPane root = new BorderPane();
-    root.setCenter(puzzleView.render());
+    VBox vbox = new VBox();
+    vbox.getChildren().addAll(puzzleView.render());
+    vbox.setAlignment(Pos.CENTER);
 
-    Scene scene = new Scene(root, 1000, 800);
+    HBox hbox = new HBox();
+    hbox.getChildren().add(vbox);
+    hbox.setAlignment(Pos.CENTER);
+
+    StackPane stackPane = new StackPane();
+    stackPane.getChildren().addAll(hbox);
+
+    BorderPane borderPane = new BorderPane();
+    borderPane.setCenter(stackPane);
+    borderPane.setBottom(controlView.render());
+
+    borderPane.setStyle("-fx-background-color: #192436");
+
+    FXComponent solvedMessage = new SolvedMessage(controller, stackPane);
+
+    Scene scene = new Scene(borderPane, 900, 900);
     stage.setTitle("Akari");
     stage.setScene(scene);
 

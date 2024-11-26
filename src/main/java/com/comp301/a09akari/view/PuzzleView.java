@@ -7,9 +7,11 @@ import com.comp301.a09akari.model.Model;
 import com.comp301.a09akari.model.ModelObserver;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 public class PuzzleView implements FXComponent, ModelObserver {
 
@@ -18,6 +20,8 @@ public class PuzzleView implements FXComponent, ModelObserver {
     private int cols;
     private Model model;
     private ControllerImpl controller;
+    private int currInd;
+    private GridPane grid;
 
     public PuzzleView(ControllerImpl controller) {
         this.controller = controller;
@@ -26,11 +30,15 @@ public class PuzzleView implements FXComponent, ModelObserver {
         this.cols = model.getActivePuzzle().getWidth();
         this.buttonGrid = new Button[rows][cols];
 
+        this.currInd = model.getActivePuzzleIndex();
+
         model.addObserver(this);
+
     }
 
     public Parent render() {
         GridPane grid = new GridPane();
+        this.grid = grid;
 
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
@@ -174,6 +182,17 @@ public class PuzzleView implements FXComponent, ModelObserver {
                     else {
                         button.setText("");
                     }
+
+          if (button.getStyle().contains("-fx-background-color: red;")
+              && (!model.isLamp(r, c) || !model.isLampIllegal(r, c))) {
+                        button.setStyle("-fx-background-color: white;" +
+                            "-fx-border-color: black;" +
+                            "-fx-border-width: 1;" +
+                            "-fx-focus-color: transparent;" +
+                            "-fx-faint-focus-color: transparent;" +
+                            "-fx-padding: 0;" +
+                            "-fx-alignment: center;");
+                    }
                 }
             }
         }
@@ -214,13 +233,46 @@ public class PuzzleView implements FXComponent, ModelObserver {
         }
     }
 
+    private void updateBoard(GridPane grid) {
+        grid.getChildren().clear();
+
+        int maxHeight = model.getActivePuzzle().getHeight();
+        int maxWidth = model.getActivePuzzle().getWidth();
+
+        for (int row = 0; row < maxHeight; row++) {
+            for (int col = 0; col < maxWidth; col++) {
+                Button cellButton = new Button();
+                cellButton.setMinSize(60, 60);
+
+                setButtonStyle(cellButton, row, col);
+
+                buttonGrid[row][col] = cellButton;
+
+                int currRow = row;
+                int currCol = col;
+                cellButton.setOnAction(event -> {
+                    controller.clickCell(currRow, currCol);
+                });
+
+                grid.add(cellButton, col, row);
+            }
+        }
+    }
+
     @Override
     public void update(Model model) {
-        this.model = model;
+        if (currInd != model.getActivePuzzleIndex()) {
+            this.rows = model.getActivePuzzle().getHeight();
+            this.cols = model.getActivePuzzle().getWidth();
+            this.buttonGrid = new Button[rows][cols];
+            this.model = model;
+            this.currInd = model.getActivePuzzleIndex();
+            updateBoard(grid);
+        }
         lightUp();
-        checkIllegalLamps();
         lightDown();
         lightbulb();
+        checkIllegalLamps();
         clueSatisfied();
     }
 }

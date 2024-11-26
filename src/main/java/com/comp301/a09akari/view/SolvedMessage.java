@@ -3,46 +3,79 @@ package com.comp301.a09akari.view;
 import com.comp301.a09akari.controller.ControllerImpl;
 import com.comp301.a09akari.model.Model;
 import com.comp301.a09akari.model.ModelObserver;
-import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 public class SolvedMessage implements FXComponent, ModelObserver {
-    private ControllerImpl controller;
     private Model model;
-    public SolvedMessage(ControllerImpl controller) {
-        this.controller = controller;
+    private ControllerImpl controller;
+    private StackPane stackPane;
+    private boolean displayed;
+    private StackPane currMessage;
+    public SolvedMessage(ControllerImpl controller, StackPane stackPane) {
         this.model = controller.getModel();
+        this.controller = controller;
+        this.stackPane = stackPane;
+        displayed = false;
 
         model.addObserver(this);
     }
     @Override
     public Parent render() {
-        Alert alert = new Alert(AlertType.INFORMATION);
+        VBox vbox = new VBox();
+        Label winLabel = new Label("You Win!");
+        winLabel.setStyle("-fx-font-size: 36px; -fx-text-fill: white;");
 
-        alert.setTitle("Congratulations");
-        alert.setHeaderText("You Win!");
-        alert.setContentText("Would you like to play again? Try a different puzzle!");
+        Label playAgain = new Label("You lit up the grid! Try another puzzle!");
+        playAgain.setStyle("-fx-font-size: 18px; -fx-text-fill: white;");
 
-        ButtonType playAgainButton = new ButtonType("Play Again");
-
-        alert.getButtonTypes().setAll(playAgainButton);
-
-        alert.showAndWait().ifPresent(response -> {
-            if (response == playAgainButton) {
-                System.out.println("Play Again button clicked!");
-            }
+        Button playButton = new Button("Play Again");
+        playButton.setStyle(
+            "-fx-background-color: #007BFF;" +
+            "-fx-text-fill: white;" +
+            "-fx-font-size: 14px;" +
+            "-fx-font-weight: bold;" +
+            "-fx-border-radius: 5px;" +
+            "-fx-background-radius: 5px;" +
+            "-fx-padding: 8px 16px;" +
+            "-fx-cursor: hand;");
+        playButton.setOnAction(e -> {
+            controller.clickResetPuzzle();
         });
 
-        return null;
+        int maxWidth = model.getActivePuzzle().getWidth() * 60;
+        int maxHeight = model.getActivePuzzle().getHeight() * 60;
+
+        vbox.getChildren().addAll(winLabel, playAgain, playButton);
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7);");
+        vbox.setMaxHeight(maxHeight);
+        vbox.setMaxWidth(maxWidth);
+        vbox.setSpacing(25);
+        StackPane winMessage = new StackPane(vbox);
+        winMessage.setAlignment(Pos.CENTER);
+
+        currMessage = winMessage;
+
+        return winMessage;
     }
 
     @Override
     public void update(Model model) {
         if (model.isSolved()) {
-            render();
+            if (!displayed) {
+                stackPane.getChildren().add(this.render());
+                displayed = true;
+            }
+        }
+
+        else if (displayed) {
+            stackPane.getChildren().remove(currMessage);
+            displayed = false;
         }
     }
 }
