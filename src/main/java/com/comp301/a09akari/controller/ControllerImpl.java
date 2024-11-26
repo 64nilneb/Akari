@@ -1,12 +1,18 @@
 package com.comp301.a09akari.controller;
 
 import com.comp301.a09akari.model.Model;
+import com.comp301.a09akari.view.SolvedMessage;
+import javafx.scene.Parent;
 
 public class ControllerImpl implements ClassicMvcController {
   private Model model;
 
   public ControllerImpl(Model model) {
     this.model = model;
+  }
+
+  public Model getModel() {
+    return model;
   }
 
   @Override
@@ -22,5 +28,11 @@ public class ControllerImpl implements ClassicMvcController {
   public void clickResetPuzzle() {}
 
   @Override
-  public void clickCell(int r, int c) {}
+  public void clickCell(int r, int c) {
+    if (model.isLamp(r, c)) {
+      model.removeLamp(r, c);
+    } else {
+      model.addLamp(r, c);
+    }
+  }
 }
