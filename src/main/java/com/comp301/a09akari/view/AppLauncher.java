@@ -23,12 +23,35 @@ public class AppLauncher extends Application {
     Puzzle puzzle3 = new PuzzleImpl(SamplePuzzles.PUZZLE_03);
     Puzzle puzzle4 = new PuzzleImpl(SamplePuzzles.PUZZLE_04);
     Puzzle puzzle5 = new PuzzleImpl(SamplePuzzles.PUZZLE_05);
+    Puzzle puzzle6 = new PuzzleImpl(SamplePuzzles.PUZZLE_06);
+    Puzzle puzzle7 = new PuzzleImpl(SamplePuzzles.PUZZLE_07);
+    Puzzle puzzle8 = new PuzzleImpl(SamplePuzzles.PUZZLE_08);
+    Puzzle puzzle9 = new PuzzleImpl(SamplePuzzles.PUZZLE_09);
+    Puzzle puzzle10 = new PuzzleImpl(SamplePuzzles.PUZZLE_10);
+    Puzzle puzzle11 = new PuzzleImpl(SamplePuzzles.PUZZLE_11);
+    Puzzle puzzle12 = new PuzzleImpl(SamplePuzzles.PUZZLE_12);
+    Puzzle puzzle13 = new PuzzleImpl(SamplePuzzles.PUZZLE_13);
+    Puzzle puzzle14 = new PuzzleImpl(SamplePuzzles.PUZZLE_14);
+    Puzzle puzzle15 = new PuzzleImpl(SamplePuzzles.PUZZLE_15);
+    Puzzle puzzle16 = new PuzzleImpl(SamplePuzzles.PUZZLE_16);
 
     library.addPuzzle(puzzle1);
     library.addPuzzle(puzzle2);
     library.addPuzzle(puzzle3);
     library.addPuzzle(puzzle4);
     library.addPuzzle(puzzle5);
+    library.addPuzzle((puzzle6));
+    library.addPuzzle((puzzle7));
+    library.addPuzzle((puzzle8));
+    library.addPuzzle((puzzle9));
+    library.addPuzzle((puzzle10));
+    library.addPuzzle((puzzle11));
+    library.addPuzzle((puzzle12));
+    library.addPuzzle((puzzle13));
+    library.addPuzzle((puzzle14));
+    library.addPuzzle((puzzle15));
+    library.addPuzzle((puzzle16));
+
 
     Model model = new ModelImpl(library);
     model.setActivePuzzleIndex(0);

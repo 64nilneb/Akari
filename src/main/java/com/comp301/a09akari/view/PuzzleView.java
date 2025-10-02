@@ -6,9 +6,12 @@ import com.comp301.a09akari.model.Model;
 import com.comp301.a09akari.model.ModelObserver;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.image.Image;
 
 public class PuzzleView implements FXComponent, ModelObserver {
 
@@ -124,7 +127,7 @@ public class PuzzleView implements FXComponent, ModelObserver {
         if (model.getActivePuzzle().getCellType(r, c) == CellType.CORRIDOR) {
           if (model.isLit(r, c)) {
             button.setStyle(
-                "-fx-background-color: yellow;"
+                "-fx-background-color: #e0d94c;"
                     + "-fx-border-color: black;"
                     + "-fx-border-width: 1;");
           }
@@ -142,7 +145,7 @@ public class PuzzleView implements FXComponent, ModelObserver {
         Button button = buttonGrid[r][c];
         if (model.getActivePuzzle().getCellType(r, c) == CellType.CORRIDOR
             && !model.isLit(r, c)
-            && button.getStyle().contains("-fx-background-color: yellow;")) {
+            && button.getStyle().contains("-fx-background-color: #e0d94c;")) {
           button.setStyle(
               "-fx-background-color: white;" + "-fx-border-color: black;" + "-fx-border-width: 1;");
         }
@@ -161,7 +164,7 @@ public class PuzzleView implements FXComponent, ModelObserver {
             && model.isLamp(r, c)
             && model.isLampIllegal(r, c)) {
           button.setStyle(
-              "-fx-background-color: red;" + "-fx-border-color: black;" + "-fx-border-width: 1;");
+              "-fx-background-color: red;" + "-fx-border-color: black;" + "-fx-border-width: 1;" + "-fx-font-size: 24px");
         }
       }
     }
@@ -177,6 +180,10 @@ public class PuzzleView implements FXComponent, ModelObserver {
         if (model.getActivePuzzle().getCellType(r, c) == CellType.CORRIDOR) {
           if (model.isLamp(r, c)) {
             button.setText("\uD83D\uDCA1");
+            button.setStyle("-fx-background-color: #e0d94c;"
+                + "-fx-border-color: black;"
+                + "-fx-border-width: 1;" +
+                "-fx-font-size: 24px;");
           } else {
             button.setText("");
           }
